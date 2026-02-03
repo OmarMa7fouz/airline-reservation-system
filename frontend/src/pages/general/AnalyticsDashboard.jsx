@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import "./AnalyticsDashboard.css";
 
 const AnalyticsDashboard = () => {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("overview");
   const [dateRange, setDateRange] = useState("7days");

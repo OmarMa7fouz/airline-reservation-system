@@ -25,7 +25,6 @@ const PaymentPage = () => {
 
   // Split Payment
   const [splitEmails, setSplitEmails] = useState([""]);
-  const [splitShares, setSplitShares] = useState({}); // email -> amount
 
   const rates = { USD: 1, EUR: 0.92, GBP: 0.79, JPY: 148, AED: 3.67 };
   const currencySymbols = {
@@ -198,6 +197,9 @@ const PaymentPage = () => {
             >
               Payment Method
             </h2>
+            {error && (
+              <div style={{ color: "red", marginBottom: "1rem" }}>{error}</div>
+            )}
 
             {/* Currency Switcher */}
             <select

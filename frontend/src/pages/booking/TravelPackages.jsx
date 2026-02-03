@@ -14,34 +14,34 @@ const TravelPackages = () => {
   });
 
   useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        setLoading(true);
+        const queryParams = new URLSearchParams();
+
+        if (filter.destination)
+          queryParams.append("destination", filter.destination);
+        if (filter.minPrice) queryParams.append("minPrice", filter.minPrice);
+        if (filter.maxPrice) queryParams.append("maxPrice", filter.maxPrice);
+        if (filter.featured) queryParams.append("featured", "true");
+
+        const response = await fetch(
+          `http://localhost:5000/api/v1/multi-modal/packages?${queryParams}`,
+        );
+        const data = await response.json();
+
+        if (data.success) {
+          setPackages(data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching packages:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchPackages();
   }, [filter]);
-
-  const fetchPackages = async () => {
-    try {
-      setLoading(true);
-      const queryParams = new URLSearchParams();
-
-      if (filter.destination)
-        queryParams.append("destination", filter.destination);
-      if (filter.minPrice) queryParams.append("minPrice", filter.minPrice);
-      if (filter.maxPrice) queryParams.append("maxPrice", filter.maxPrice);
-      if (filter.featured) queryParams.append("featured", "true");
-
-      const response = await fetch(
-        `http://localhost:5000/api/v1/multi-modal/packages?${queryParams}`,
-      );
-      const data = await response.json();
-
-      if (data.success) {
-        setPackages(data.data);
-      }
-    } catch (error) {
-      console.error("Error fetching packages:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleBookPackage = (pkg) => {
     navigate(`/multi-modal/book/${pkg.id}`, { state: { package: pkg } });

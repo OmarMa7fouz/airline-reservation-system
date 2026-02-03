@@ -102,7 +102,6 @@ const SeatMap = ({
     const isBooked = seat.IsAvailable === 0;
     // Updated to use project's Primary Navy color instead of Saudia Green
     const brandColor = "#0f172a";
-    const brandAccent = "#d97706"; // Amber
 
     // Determine seat attributes
     const isWindow = ["A", "K", "F", "A"].includes(seat.SeatNumber.slice(-1)); // Simple logic

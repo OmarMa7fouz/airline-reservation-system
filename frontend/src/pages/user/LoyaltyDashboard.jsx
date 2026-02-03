@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import "./LoyaltyDashboard.css";
 
 const LoyaltyDashboard = () => {
-  const navigate = useNavigate();
   const [loyaltyData, setLoyaltyData] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -75,7 +75,6 @@ const HomePage = () => {
 
   // Animation states
   const [hoveredPlanImg, setHoveredPlanImg] = useState(null);
-  const [hoveredLoungeImg, setHoveredLoungeImg] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -206,15 +205,6 @@ const HomePage = () => {
               "flightStatus",
               "flightSchedule",
             ].map((tabKey) => {
-              const isActive =
-                activeTab ===
-                (tabKey === "checkIn"
-                  ? "check-in"
-                  : tabKey === "flightStatus"
-                  ? "flight status"
-                  : tabKey === "flightSchedule"
-                  ? "flight schedule"
-                  : tabKey);
               // Normalize tab key for state comparison if needed, but for now simplify:
               // The original code used strings like "Book", "Manage".
               // Let's rely on the key for translation and mapping to state.
@@ -926,18 +916,28 @@ const HomePage = () => {
                   </button>
                 </div>
                 <div style={{ marginTop: "1.5rem" }}>
-                  <a
-                    href="#"
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      // Logic for "Tell me more" could go here
+                    }}
                     style={{
                       color: "#006C35",
                       fontWeight: 600,
                       fontSize: "0.9rem",
                       textDecoration: "none",
+                      background: "none",
+                      border: "none",
+                      padding: 0,
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "5px",
                     }}
                   >
                     {t("tellMeMoreManage")}{" "}
                     <i className="ri-arrow-right-line"></i>
-                  </a>
+                  </button>
                 </div>
               </div>
             )}

@@ -23,28 +23,28 @@ const PackageBooking = () => {
   });
 
   useEffect(() => {
+    const fetchPackageDetails = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `http://localhost:5000/api/v1/multi-modal/packages/${packageId}`,
+        );
+        const data = await response.json();
+
+        if (data.success) {
+          setPackageData(data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching package:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (!packageData) {
       fetchPackageDetails();
     }
-  }, [packageId]);
-
-  const fetchPackageDetails = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(
-        `http://localhost:5000/api/v1/multi-modal/packages/${packageId}`,
-      );
-      const data = await response.json();
-
-      if (data.success) {
-        setPackageData(data.data);
-      }
-    } catch (error) {
-      console.error("Error fetching package:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [packageId, packageData]);
 
   const calculateTotalPrice = () => {
     if (!packageData) return 0;

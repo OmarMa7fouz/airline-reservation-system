@@ -12,8 +12,8 @@ const ReservationPage = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [selectedCar, setSelectedCar] = useState(null);
   const [price, setPrice] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [firstName] = useState("");
+  const [lastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -88,7 +88,7 @@ const ReservationPage = () => {
     checkExtras();
     window.addEventListener("storage", checkExtras);
     return () => window.removeEventListener("storage", checkExtras);
-  }, []);
+  }, [location.state, searchParams]);
 
   useEffect(() => {
     const fetchFlights = async () => {
@@ -235,6 +235,7 @@ const ReservationPage = () => {
     selectedExtras,
     selectedCar,
     passengerCount,
+    location.state,
   ]);
 
   const handleFlightChange = (e) => {
@@ -1311,14 +1312,18 @@ const ReservationPage = () => {
                     `Trip Summary. Flight from ${
                       selectedFlight
                         ? location.state?.flightDTO?.Source ||
-                          flights.find((f) => f.FlightId == selectedFlight)
-                            ?.Source
+                          flights.find(
+                            (f) =>
+                              String(f.FlightId) === String(selectedFlight),
+                          )?.Source
                         : "Unknown"
                     } to ${
                       selectedFlight
                         ? location.state?.flightDTO?.Destination ||
-                          flights.find((f) => f.FlightId == selectedFlight)
-                            ?.Destination
+                          flights.find(
+                            (f) =>
+                              String(f.FlightId) === String(selectedFlight),
+                          )?.Destination
                         : "Unknown"
                     }. Total price ${price} dollars.`,
                   )

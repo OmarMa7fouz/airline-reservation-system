@@ -41,69 +41,69 @@ const UserPreferences = () => {
   });
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+
+        // Fetch all data in parallel
+        const [prefsRes, welcomeRes, recsRes, offersRes, occasionsRes] =
+          await Promise.all([
+            fetch(
+              `http://localhost:5000/api/v1/personalization/preferences/${user.id}`,
+            ),
+            fetch(
+              `http://localhost:5000/api/v1/personalization/welcome/${user.id}`,
+            ),
+            fetch(
+              `http://localhost:5000/api/v1/personalization/recommendations/${user.id}`,
+            ),
+            fetch(
+              `http://localhost:5000/api/v1/personalization/offers/${user.id}`,
+            ),
+            fetch(
+              `http://localhost:5000/api/v1/personalization/occasions/${user.id}`,
+            ),
+          ]);
+
+        const [prefsData, welcomeData, recsData, offersData, occasionsData] =
+          await Promise.all([
+            prefsRes.json(),
+            welcomeRes.json(),
+            recsRes.json(),
+            offersRes.json(),
+            occasionsRes.json(),
+          ]);
+
+        if (prefsData.success) {
+          setPreferences(prefsData.data);
+        }
+
+        if (welcomeData.success) {
+          setWelcomeMessage(welcomeData.data.message);
+        }
+
+        if (recsData.success) {
+          setRecommendations(recsData.data.recommendations || []);
+        }
+
+        if (offersData.success) {
+          setActiveOffers(offersData.data || []);
+        }
+
+        if (occasionsData.success) {
+          setOccasions(occasionsData.data || []);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (user) {
       fetchData();
     }
   }, [user]);
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-
-      // Fetch all data in parallel
-      const [prefsRes, welcomeRes, recsRes, offersRes, occasionsRes] =
-        await Promise.all([
-          fetch(
-            `http://localhost:5000/api/v1/personalization/preferences/${user.id}`,
-          ),
-          fetch(
-            `http://localhost:5000/api/v1/personalization/welcome/${user.id}`,
-          ),
-          fetch(
-            `http://localhost:5000/api/v1/personalization/recommendations/${user.id}`,
-          ),
-          fetch(
-            `http://localhost:5000/api/v1/personalization/offers/${user.id}`,
-          ),
-          fetch(
-            `http://localhost:5000/api/v1/personalization/occasions/${user.id}`,
-          ),
-        ]);
-
-      const [prefsData, welcomeData, recsData, offersData, occasionsData] =
-        await Promise.all([
-          prefsRes.json(),
-          welcomeRes.json(),
-          recsRes.json(),
-          offersRes.json(),
-          occasionsRes.json(),
-        ]);
-
-      if (prefsData.success) {
-        setPreferences(prefsData.data);
-      }
-
-      if (welcomeData.success) {
-        setWelcomeMessage(welcomeData.data.message);
-      }
-
-      if (recsData.success) {
-        setRecommendations(recsData.data.recommendations || []);
-      }
-
-      if (offersData.success) {
-        setActiveOffers(offersData.data || []);
-      }
-
-      if (occasionsData.success) {
-        setOccasions(occasionsData.data || []);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleSavePreferences = async () => {
     try {

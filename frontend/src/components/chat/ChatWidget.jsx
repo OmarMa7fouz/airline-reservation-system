@@ -26,7 +26,7 @@ const ChatWidget = () => {
     if (isOpen && messages.length === 0) {
       loadSuggestions();
     }
-  }, [isOpen]);
+  }, [isOpen, messages.length]);
 
   const loadSuggestions = async () => {
     try {
