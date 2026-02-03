@@ -1,0 +1,28 @@
+/* Accessibility High Contrast Mode */
+body.high-contrast {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+body.high-contrast * {
+  background-color: #000 !important;
+  color: #fff !important;
+  border-color: #fff !important;
+  box-shadow: none !important;
+}
+
+body.high-contrast a,
+body.high-contrast button,
+body.high-contrast i {
+  color: #ffff00 !important; /* Yellow for interactive elements */
+  text-decoration: underline;
+}
+
+body.high-contrast img {
+  filter: grayscale(100%) contrast(120%);
+}
+
+body.high-contrast input,
+body.high-contrast select {
+  border: 2px solid #fff !important;
+}
