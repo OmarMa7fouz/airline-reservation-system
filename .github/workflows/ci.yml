@@ -41,7 +41,7 @@ jobs:
 
       - name: Install Backend Dependencies
         working-directory: ./backend
-        run: npm ci --legacy-peer-deps
+        run: npm ci --legacy-peer-deps --force
 
     # Add backend tests here in the future
     # - name: Run Backend Tests
