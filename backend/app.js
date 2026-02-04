@@ -20,6 +20,16 @@ const paymentRoutes = require('./routes/paymentRoutes');
 const { apiLimiter } = require('./middleware/rateLimitMiddleware');
 
 // Middleware
+const helmet = require('helmet');
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      imgSrc: ["'self'", "https:", "data:"], // Allow images from https (e.g. Unsplash)
+      connectSrc: ["'self'", "http://localhost:3000"], // Allow frontend connection
+    },
+  },
+}));
 app.use(cors({
   origin: 'http://localhost:3000',
   credentials: true
