@@ -293,7 +293,6 @@ const ReservationPage = () => {
         firstName: passengers[0]?.firstName || firstName,
         lastName: passengers[0]?.lastName || lastName,
         email: passengers[0]?.email || email,
-        password: password || "123456",
       },
       fareType: searchParams.get("fare") || "light",
       extras: selectedExtras, // Pass extras to Payment Page
