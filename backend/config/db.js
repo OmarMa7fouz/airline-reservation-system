@@ -141,6 +141,22 @@ db.serialize(() => {
     if (err) console.error('❌ Error creating loyalty_transactions table:', err.message);
   });
 
+  // Notifications table
+  db.run(`
+    CREATE TABLE IF NOT EXISTS notifications (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      type VARCHAR(50) NOT NULL,
+      title TEXT NOT NULL,
+      message TEXT NOT NULL,
+      is_read INTEGER DEFAULT 0,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES Passenger(PassengerId)
+    );
+  `, (err) => {
+    if (err) console.error('❌ Error creating notifications table:', err.message);
+  });
+
   console.log("✅ All tables created successfully.");
 });
 
